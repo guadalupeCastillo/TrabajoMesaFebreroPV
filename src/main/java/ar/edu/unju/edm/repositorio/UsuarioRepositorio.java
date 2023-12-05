@@ -8,6 +8,6 @@ import ar.edu.unju.edm.modelo.Usuario;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, Long>{
 
-	public Usuario findByEmail(String email);
+	Usuario findByEmail(String email);
 	
 }

@@ -1,19 +1,10 @@
 package ar.edu.unju.edm.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -30,8 +21,11 @@ public class Usuario {
 	private String apellido;
 
 	private String email;
+
+	@JsonIgnore
 	private String password;
-	
+
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "usuarios_roles",
@@ -39,6 +33,10 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
 			)
 	private Collection<Rol> roles;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "creador", cascade = CascadeType.REMOVE)
+	private Collection<Valoracion> valoraciones;
 
 	public Long getId() {
 		return id;
@@ -88,7 +86,15 @@ public class Usuario {
 		this.roles = roles;
 	}
 
-	public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
+	public Collection<Valoracion> getValoraciones() {
+		return valoraciones;
+	}
+
+	public void setValoraciones(Collection<Valoracion> valoraciones) {
+		this.valoraciones = valoraciones;
+	}
+
+	public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles, Collection<Valoracion> valoraciones) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -96,6 +102,7 @@ public class Usuario {
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.valoraciones = valoraciones;
 	}
 
 	public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {

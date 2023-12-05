@@ -1,13 +1,17 @@
-package ar.edu.unju.edm.servicio;
+package ar.edu.unju.edm.servicio.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import ar.edu.unju.edm.servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -57,5 +61,17 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public List<Usuario> listarUsuarios() {
 		return usuarioRepositorio.findAll();
+	}
+
+	public Usuario buscarUsuario(String email) {
+		return usuarioRepositorio.findByEmail(email);
+	}
+
+	public Optional<Usuario> obtenerUsuarioActual() {
+		var auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth instanceof AnonymousAuthenticationToken) {
+			return Optional.empty();
+		}
+		return Optional.ofNullable(buscarUsuario(auth.getName()));
 	}
 }
