@@ -11,4 +11,6 @@ public interface PuntoDeInteresServicio {
     List<PuntoDeInteres> buscarTodos();
 
     Optional<PuntoDeInteres> buscarPorId(Long id);
+
+    void eliminar(PuntoDeInteres poi);
 }

@@ -21,7 +21,7 @@
             <h2>Valoraciones</h2>
             <a class="btn btn-primary" href="#" th:href="@{/poi/{id}/valoracion/nueva(id=*{id})}">Agregar valoración</a>
 
-            <article class="card mt-3" th:each="valoracion : *{valoraciones}" th:object="${valoracion}">
+            <article class="card mt-3" th:each="valoracion : *{valoraciones}" th:object="${valoracion}" th:if="*{estado}">
                 <div class="card-header row align-items-center">
                     <small class="col-auto" th:text="*{creador.nombre} + ' ' + *{creador.apellido}">Nombre y Apellido</small>
                     <div class="col-auto" th:if="${usuarioId} == *{creador.id}" style="display: inline-block">

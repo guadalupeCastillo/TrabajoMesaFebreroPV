@@ -28,4 +28,10 @@ public class PuntoDeInteresServicioImpl implements PuntoDeInteresServicio {
     public Optional<PuntoDeInteres> buscarPorId(Long id) {
         return puntoDeInteresRepositorio.findById(id);
     }
+
+    @Override
+    public void eliminar(PuntoDeInteres poi) {
+        poi.setEstado(false);
+        puntoDeInteresRepositorio.save(poi);
+    }
 }

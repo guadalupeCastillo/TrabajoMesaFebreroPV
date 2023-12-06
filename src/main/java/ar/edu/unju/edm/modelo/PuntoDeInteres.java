@@ -3,7 +3,7 @@ package ar.edu.unju.edm.modelo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.OptionalDouble;
 
@@ -14,7 +14,7 @@ public class PuntoDeInteres {
     @Column(name = "poi_id")
     private Long id;
 
-    @NotNull
+    @NotBlank
     private String nombre;
 
     @Column(columnDefinition = "TEXT")
