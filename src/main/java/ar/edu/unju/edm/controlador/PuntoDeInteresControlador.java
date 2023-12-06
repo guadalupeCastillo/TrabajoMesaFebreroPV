@@ -1,6 +1,7 @@
 package ar.edu.unju.edm.controlador;
 
 import ar.edu.unju.edm.modelo.PuntoDeInteres;
+import ar.edu.unju.edm.modelo.Valoracion;
 import ar.edu.unju.edm.servicio.PuntoDeInteresServicio;
 import ar.edu.unju.edm.servicio.UsuarioServicio;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class PuntoDeInteresControlador {
     public String mostrarPuntoDeInteresPorId(@PathVariable Long id, Model model) {
         var poi = puntoDeInteresServicio.buscarPorId(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         model.addAttribute("poi", poi);
+        model.addAttribute("valoracion", new Valoracion());
         model.addAttribute("usuarioId", usuarioServicio.obtenerUsuarioActual().orElseThrow().getId());
         return "puntoDeInteres";
     }
@@ -71,7 +73,6 @@ public class PuntoDeInteresControlador {
 
         puntoDeInteresServicio.agregarPoi(puntoDeInteres);
 
-        logger.info(puntoDeInteres.toString());
         return "redirect:/poi/" + puntoDeInteres.getId();
     }
 

@@ -34,7 +34,7 @@ public class PuntoDeInteres {
     private boolean estado = true;
 
     public OptionalDouble getValoracion() {
-        return valoraciones.stream().mapToDouble(v -> (double) v.getValoracion()).average();
+        return valoraciones.stream().filter(Valoracion::isEstado).mapToDouble(v -> (double) v.getValor()).average();
     }
 
     public PuntoDeInteres() {
@@ -121,7 +121,6 @@ public class PuntoDeInteres {
                 ", descripcion='" + descripcion + '\'' +
                 ", imagen='" + imagen + '\'' +
                 ", creador=" + creador +
-                ", valoraciones=" + valoraciones +
                 '}';
     }
 }

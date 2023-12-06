@@ -6,6 +6,8 @@ import ar.edu.unju.edm.servicio.ValoracionServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ValoracionServicioImpl implements ValoracionServicio {
     @Autowired
@@ -14,5 +16,10 @@ public class ValoracionServicioImpl implements ValoracionServicio {
     @Override
     public void agregarValoracion(Valoracion valoracion) {
         valoracionRepositorio.save(valoracion);
+    }
+
+    @Override
+    public Optional<Valoracion> buscarValoracionPorId(Long id) {
+        return valoracionRepositorio.findById(id);
     }
 }

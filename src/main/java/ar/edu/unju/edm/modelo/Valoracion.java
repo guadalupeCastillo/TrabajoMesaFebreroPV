@@ -23,7 +23,7 @@ public class Valoracion {
     @NotNull
     @Positive
     @Max(value = 5)
-    private Integer valoracion;
+    private Integer valor;
 
     @Column(columnDefinition = "TEXT")
     @Lob
@@ -34,18 +34,18 @@ public class Valoracion {
     public Valoracion() {
     }
 
-    public Valoracion(Long id, Usuario creador, PuntoDeInteres poi, Integer valoracion, String descripcion) {
+    public Valoracion(Long id, Usuario creador, PuntoDeInteres poi, Integer valor, String descripcion) {
         this.id = id;
         this.creador = creador;
         this.poi = poi;
-        this.valoracion = valoracion;
+        this.valor = valor;
         this.descripcion = descripcion;
     }
 
-    public Valoracion(Usuario creador, PuntoDeInteres poi, Integer valoracion, String descripcion) {
+    public Valoracion(Usuario creador, PuntoDeInteres poi, Integer valor, String descripcion) {
         this.creador = creador;
         this.poi = poi;
-        this.valoracion = valoracion;
+        this.valor = valor;
         this.descripcion = descripcion;
     }
 
@@ -73,12 +73,12 @@ public class Valoracion {
         this.poi = poi;
     }
 
-    public Integer getValoracion() {
-        return valoracion;
+    public Integer getValor() {
+        return valor;
     }
 
-    public void setValoracion(Integer valoracion) {
-        this.valoracion = valoracion;
+    public void setValor(Integer valor) {
+        this.valor = valor;
     }
 
     public String getDescripcion() {
@@ -103,7 +103,7 @@ public class Valoracion {
                 "id=" + id +
                 ", creador=" + creador +
                 ", poi=" + poi +
-                ", valoracion=" + valoracion +
+                ", valor=" + valor +
                 ", descripcion='" + descripcion + '\'' +
                 '}';
     }
