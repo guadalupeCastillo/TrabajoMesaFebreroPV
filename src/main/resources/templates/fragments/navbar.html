@@ -16,6 +16,9 @@
             </button>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="#" th:href="@{/admin}" class="nav-link">Administración</a>
+                    </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                         <a sec:authentication="principal.username"
                            class="nav-link dropdown-toggle"

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<main class="container">
+    <h1 class="mb-2">Administración</h1>
+
+    <section>
+        <h2 class="lead">Usuarios</h2>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}">ID</td>
+                        <td th:text="${usuario.nombre}">ID</td>
+                        <td th:text="${usuario.apellido}">ID</td>
+                        <td th:text="${usuario.email}">ID</td>
+                    </tr>
+                </tbody>
+            </table>
+    </section>
+    <section>
+        <h2 class="lead">Puntos de interés</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Imagen</th>
+                <th>Creador</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="poi : ${puntosDeInteres}">
+                <td th:text="${poi.id}"></td>
+                <td th:text="${poi.nombre}"></td>
+                <td th:text="${#strings.abbreviate(poi.descripcion,50)}"></td>
+                <td><img src="..." alt="..." th:if="${poi.imagen}" th:src="${poi.imagen}" th:alt="'imagen de ' + ${poi.nombre}"></td>
+                <td th:text="${poi.creador.id}"></td>
+                <td>
+                    <a href="#" th:href="@{/admin/eliminar/poi/{id}(id=${poi.id})}" class="btn btn-danger" title="Eliminar">
+                        <svg aria-label="eliminar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2 class="lead">Valoraciones</h2>
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Creador</th>
+                <th>Punto de interés</th>
+                <th>Valor</th>
+                <th>Comentario</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="valoracion : ${valoraciones}">
+                <td th:text="${valoracion.id}"></td>
+                <td th:text="${valoracion.creador.id}"></td>
+                <td th:text="${valoracion.poi.id}"></td>
+                <td th:text="${valoracion.valor}"></td>
+                <td th:text="${#strings.abbreviate(valoracion.descripcion,50)}"></td>
+                <td>
+                    <a href="#" th:href="@{/admin/eliminar/valoracion/{id}(id=${valoracion.id})}" class="btn btn-danger" title="Eliminar">
+                        <svg aria-label="eliminar" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
