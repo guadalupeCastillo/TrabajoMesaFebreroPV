@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+</head>
+<body>
+    <nav th:fragment="navbar" class="navbar navbar-expand-sm bg-body-tertiary" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" th:href="@{/}">INICIO</a>
+            <button type="button" class="navbar-toggler"
+                    data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar" aria-label="Activar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="#" th:href="@{/admin}" class="nav-link">Administración</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                        <a sec:authentication="principal.username"
+                           class="nav-link dropdown-toggle"
+                           href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">Username</a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/logout}" class="dropdown-item">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>
