@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ar.edu.unju.edm.controlador.dto.UsuarioRegistroDTO;
+import ar.edu.unju.edm.modelo.Rol;
 import ar.edu.unju.edm.servicio.UsuarioServicio;
 
 @Controller
@@ -25,13 +26,19 @@ public class RegistroUsuarioControlador {
 		return new UsuarioRegistroDTO();
 	}
 
+	@ModelAttribute("rol") 
+	public Rol retornarNuevoUsuarioRegistroRolDTO() {
+		return new Rol();
+	}
+
 	@GetMapping
 	public String mostrarFormularioDeRegistro() {
 		return "registro";
 	}
 	
 	@PostMapping
-	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
+	public String registrarCuentaDeUsuario(@ModelAttribute("rol") Rol rol, @ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
+		System.out.println(rol.getNombre());
 		usuarioServicio.guardar(registroDTO);
 		return "redirect:/registro?exito";
 	}

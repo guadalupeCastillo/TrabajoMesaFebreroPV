@@ -7,6 +7,15 @@ public class UsuarioRegistroDTO {
 	private String apellido;
 	private String email;
 	private String password;
+	private boolean isAdmin;
+
+	public boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public Long getId() {
 		return id;

@@ -40,6 +40,13 @@
 							type="password" id="password" class="form-control" th:field="*{password}"
 							required autofocus="autofocus">
 					</div>
+						
+					<div>
+								<select class="form-select mb-3" th:field="*{isAdmin}">
+									<option th:value="true" th:text="ADMINISTRADOR">
+									<option th:value="false" th:text="USUARIO">
+								</select>
+					</div>
 
 					<div class="mb-3">
 						<button type="submit" class="btn btn-success">Registrar</button>

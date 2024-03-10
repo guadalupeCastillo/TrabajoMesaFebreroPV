@@ -33,6 +33,7 @@ public class Usuario {
 			inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
 			)
 	private Collection<Rol> roles;
+	
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "creador", cascade = CascadeType.REMOVE)

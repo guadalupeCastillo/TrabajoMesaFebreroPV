@@ -39,9 +39,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
 	@Override
 	public Usuario guardar(UsuarioRegistroDTO registroDTO) {
+		List<Rol> roles;
+		if(registroDTO.getIsAdmin()) {
+			roles  = List.of(new Rol("ROLE_USER"), new Rol("ROLE_ADMIN"));
+		} else { 
+			roles  = List.of(new Rol("ROLE_USER"));
+		}
 		Usuario usuario = new Usuario(registroDTO.getNombre(), 
 				registroDTO.getApellido(),registroDTO.getEmail(),
-				passwordEncoder.encode(registroDTO.getPassword()),Arrays.asList(new Rol("ROLE_USER")));
+				passwordEncoder.encode(registroDTO.getPassword()), roles);
 		return usuarioRepositorio.save(usuario);
 	}
 
