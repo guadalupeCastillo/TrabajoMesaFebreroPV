@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${poi.nombre}">Punto de interés</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="../static/css/estrellas.css" th:href="@{/css/estrellas.css}" rel="stylesheet">
+</head>
+<body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main th:object="${poi}" class="container">
+        <section>
+            <img class="img-fluid" src="..." alt="..." th:if="*{imagen}" th:src="*{imagen}" th:alt="'imagen de ' + *{nombre}">
+            <div th:if="${usuarioId} == *{creador.id}" class="row">
+                <a class="col-auto" href="#" th:href="@{/poi/{id}/editar(id=*{id})}"><small>[Editar]</small></a>
+                <a class="col-auto" href="#" th:href="@{/poi/{id}/eliminar(id=*{id})}"><small>[Eliminar]</small></a>
+            </div>
+            <h1 th:text="*{nombre}">Nombre de punto de interés</h1>
+            <p th:if="*{descripcion}" th:text="*{descripcion}">Descripción del punto de interés</p>
+        </section>
+        <section>
+            <h2>Valoraciones</h2>
+            <form th:replace="~{formularios/valoracionNueva :: form(${poi},${valoracion},${editar} ? @{/poi/{poiId}/valoracion/{id}/editar(poiId=${poi.id},id=${valoracion.id})} : @{/poi/{poiId}/valoracion/nueva(poiId=${poi.id})})}"></form>
+
+            <article class="card mt-3" th:each="valoracion : *{valoraciones}" th:object="${valoracion}" th:if="${valoracion.estado}">
+                <div class="card-header row align-items-center">
+                    <small class="col-auto" th:text="*{creador.nombre} + ' ' + *{creador.apellido}">Nombre y Apellido</small>
+                    <div class="col-auto" th:if="${usuarioId} == *{creador.id}" style="display: inline-block">
+                        <a href="#" th:href="@{/poi/{poiId}/valoracion/{id}/editar(id=*{id},poiId=${poi.id})}"><small>[Editar]</small></a>
+                        <a href="#" th:href="@{/poi/{poiId}/valoracion/{id}/eliminar(id=*{id},poiId=${poi.id})}"><small>[Eliminar]</small></a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div aria-label="x de 5 estrellas" th:aria-label="*{valor} + ' de 5 estrellas'" role="img">
+                        <svg th:each="i : ${#numbers.sequence(0, valoracion.valor-1)}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg><svg th:if="${valoracion.valor}!=5" th:each="i : ${#numbers.sequence(0, 5-valoracion.valor-1)}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                    </div>
+                    <p th:if="*{descripcion}" th:text="*{descripcion}">Comentario de la valoracion</p>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

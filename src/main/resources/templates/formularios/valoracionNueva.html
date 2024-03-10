@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${editar?: 'Agregar'} una valoración|"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="../../static/css/estrellas.css" th:href="@{/css/estrellas.css}" rel="stylesheet">
+</head>
+<body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main class="container">
+        <h1 th:text="|${editar?: 'Agregar'} una valoración|"></h1>
+        <form th:fragment="form (pointOfInterest,valoracion,url)" action="" th:action="${url}" method="post" th:object="${valoracion}">
+            <fieldset id="estrellas">
+                <label class="d-block form-label" for="estrellas">Valoración*</label>
+                <div class="form-check form-check-inline" th:each="i : ${#numbers.sequence(1,5)}">
+                    <input type="radio" required name="valoracion" th:id="'estrella' + ${i}" th:value="${i}" th:aria-label="${i}" th:field="*{valor}" class="form-check-input estrella-vacia">
+                </div>
+
+                <script>
+(() => {
+  var arr = /** @type {HTMLInputElement[]} */ (Array.from(document.getElementsByName('valor')));
+
+  function orderChecks() {
+    let last = arr.findLastIndex((e) => e.checked);
+    arr.slice(0, last + 1).forEach((e) => {
+      e.classList.remove('estrella-vacia');
+      e.classList.add('estrella-llena');
+    });
+    arr.slice(last + 1).forEach((e) => {
+      e.classList.remove('estrella-llena');
+      e.classList.add('estrella-vacia');
+    });
+  }
+
+  orderChecks();
+
+  arr.forEach((x) => x.addEventListener('change', () => orderChecks()));
+})();
+                </script>
+            </fieldset>
+            <div>
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <textarea id="descripcion" cols="30" rows="10" class="form-control" th:field="*{descripcion}"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2" th:text="${editar?: 'Agregar'}"></button>
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
